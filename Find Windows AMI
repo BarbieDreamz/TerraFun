@@ -1,0 +1,23 @@
+provider "aws" {
+  region = "us-west-2"
+}
+
+data "aws_ami" "windows" {
+  most_recent = true
+
+  filter {
+    name   = "name"
+    values = ["Windows_Server-*-English-Full-*"]
+  }
+
+  filter {
+    name   = "virtualization-type"
+    values = ["hvm"]
+  }
+
+  owners = ["amazon"]
+}
+
+output "windows_amis" {
+  value = data.aws_ami.windows.ids
+}
